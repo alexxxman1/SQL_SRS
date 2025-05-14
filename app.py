@@ -3,7 +3,19 @@ import pandas as pd
 import duckdb
 from streamlit import dataframe
 
-st.write ("hello world")
+st.write ("""
+# SQL SRS 
+Spaced Repetition System SQL practice
+""")
+
+option = st.selectbox(
+    "What would you like to review",
+    ("Joins", "GroupBy", "Windows Functions"),
+    index=None,
+    placeholder="Select a theme ...",
+)
+st.write('You dselected: ', option)
+
 
 data= {"a":[6, 7, 10], "b":[6, 9,1]}
 df = pd.DataFrame(data)
