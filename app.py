@@ -43,19 +43,20 @@ with tab1:
     st.write(f"vous avez entré la requête:{sql_query}")
     st.dataframe(result)
 
-    sql_query1= (" SELECT * FROM beverages")
+    st.write("beverages")
+    sql_query1= """SELECT * FROM beverages"""
     result1 = duckdb.query(sql_query1).df()
     st.dataframe(result1)
 
-    sql_query2 = (" SELECT * FROM food_items")
+    st.write("food_items")
+    sql_query2 = """SELECT * FROM food_items"""
     result2 = duckdb.query(sql_query2).df()
     st.dataframe(result2)
 
     # AFFICHAGE DU BON RESULTAT
+    st.write("resultat espéré")
     result3 = duckdb.query(answer).df()
     st.dataframe(result3)
-
-
 
 
 with tab2:
