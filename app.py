@@ -1,7 +1,11 @@
+# pylint: disable=missing-module-docstring
 import streamlit as st
 import pandas as pd
 import duckdb
 import io
+
+#from duckdb.duckdb import query
+#from sepolgen.classperms import result
 
 csv='''
 bevarage, price
@@ -33,15 +37,32 @@ with st.sidebar:
     )
     st.write('You dselected: ', option)
 
+st.header('entrer votre code:')
+query = st.text_area(label="votre code sql ici", key="user_input")
+
+if query:
+    result = duckdb.sql(query).df()
+    st.dataframe(result)
+
+    try:
+        result = result[solution.columns]
+        st.dataframe(result.compare(solution))
+    except KeyError as e:
+        st.write("some columns are missing")
+
+    n_lines_difference = result.shape[0] - solution.shape[0]
+    if n_lines_difference != 0:
+        st.write( f"result has a '{n_lines_difference}' lines difference with the solution")
+
 
 tab1, tab2 = st.tabs(["tables", "solution"])
 
 with tab1:
     # selection et requête
-    sql_query = st.text_area(label="entrez votre input")
-    result = duckdb.query(sql_query).df()
-    st.write(f"vous avez entré la requête:{sql_query}")
-    st.dataframe(result)
+     # sql_query = st.text_area(label="entrez votre input")
+    # result = duckdb.query(sql_query).df()
+    # st.write(f"vous avez entré la requête:{sql_query}")
+    # st.dataframe(result)
 
     st.write("beverages")
     sql_query1= """SELECT * FROM beverages"""
