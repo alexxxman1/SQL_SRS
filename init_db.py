@@ -8,15 +8,15 @@ con = duckdb.connect(database='data/exercices_sql_tables.duckdb', read_only=Fals
 
 
 # # exo list
-# data = {
-#    "theme": ["cross_joins"],
-#    "exercise_name": ["beverages_and_food"],
-#    "tables": [["beverages", "food_items"]],
-#   "last_reviewed": ["1970-01-01"]
-#}
+data = {
+    "theme": ["cross_joins", "window_function"],
+    "exercise_name": ["beverages_and_food", "simple_window"],
+    "tables": [["beverages", "food_items"], "simple_window"],
+    "last_reviewed": ["1970-01-01", "1970-01-01"]
+}
 
-#memory_state_df = pd.DataFrame(data)
-#con.execute("CREATE TABLE IF NOT EXISTS memory_state AS SELECT * FROM memory_state_df")
+memory_state_df = pd.DataFrame(data)
+con.execute("CREATE TABLE IF NOT EXISTS memory_state AS SELECT * FROM memory_state_df")
 
 # croos_join exo
 

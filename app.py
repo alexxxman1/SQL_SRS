@@ -4,40 +4,32 @@ import pandas as pd
 import duckdb
 import io
 
-# from duckdb.duckdb import query
-# from sepolgen.classperms import result
+# créer une connexion
 
-csv = """
-bevarage, price
-orangejuice, 2.5
-expresso, 2
-tea,3
-"""
-beverages = pd.read_csv(io.StringIO(csv))
+con = duckdb.connect(database='data/exercices_sql_tables.duckdb', read_only=False)
 
-csv2 = """
-food_item, food_price
-cookie juice, 2.5
-chocolatine, 2
-muffin,3
-"""
-food_items = pd.read_csv(io.StringIO(csv2))
-
-answer = """SELECT * FROM beverages CROSS JOIN food_items"""
-solution = duckdb.query(answer).df()
+#answer = """SELECT * FROM beverages CROSS JOIN food_items"""
+# solution = duckdb.query(answer).df()
 
 
 with st.sidebar:
-    option = st.selectbox(
+    theme = st.selectbox(
         "What would you like to review",
-        ("Joins", "GroupBy", "Windows Functions"),
+        ("cross_joins", "GroupBy", "Windows Functions"),
         index=None,
         placeholder="Select a theme ...",
     )
-    st.write("You dselected: ", option)
+    st.write("You dselected: ", theme)
+
+    # la var exercice indexe le theme de chaque exercise dans la table mémory de la db
+    # attention '' -> {theme}' car nous ne voulons pas comparer la col theme avec la col cross_join
+    exercise= con.execute(f"select * from memory_state WHERE theme ='{theme}'").df()
+    st.write(exercise)
 
 st.header("entrer votre code:")
 query = st.text_area(label="votre code sql ici", key="user_input")
+
+'''
 
 if query:
     result = duckdb.sql(query).df()
@@ -85,6 +77,7 @@ with tab2:
     st.header("SOLUTION A LA QUESTION")
     st.write(f"vous avez entré la requête solution:{answer}")
 
+'''
 
 # with tab_x:
 # 1 st.header("A cat")
