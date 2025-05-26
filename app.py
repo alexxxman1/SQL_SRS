@@ -20,7 +20,8 @@ with st.sidebar:
 
     # la var exercice indexe le theme de chaque exercise dans la table mémory de la db
     # attention '' -> {theme}' car nous ne voulons pas comparer la col theme avec la col cross_join
-    exercise = con.execute(f"select * from memory_state WHERE theme ='{theme}'").df()
+    exercise = con.execute(f"select * from memory_state WHERE theme ='{theme}'").df().sort_values("last_reviewed",
+                                                                                                  ascending=True).reset_index()
     st.write(exercise)
 
     exercise_name = exercise.loc[0, "exercise_name"]
@@ -56,7 +57,7 @@ tab1, tab2 = st.tabs(["tables", "solution"])
 with tab1:
 
 
-    exercise_tables= ast.literal_eval(exercise.loc[0, "tables"])
+    exercise_tables= exercise.loc[0, "tables"]
 
     for table in exercise_tables:
 
