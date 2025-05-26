@@ -12,9 +12,13 @@ import ast
 # verification de l'existance de la base de données
 
 if "data"not in os.listdir():
-    logging.debug((os.listdir()))
-    logging.debug(("creating folder data")
-    os.mikdir("data")
+    logging.error((os.listdir()))
+    logging.error()("creating folder data")
+    os.mkdir("data")
+
+    #logging.debug((os.listdir()))
+    #logging.debug(("creating folder data")
+    #os.mkdir("data")
 
 if "exercises_sql_tables.duckdb" not in os.listdir("data"):
     exec(open("init_db.py").read())
